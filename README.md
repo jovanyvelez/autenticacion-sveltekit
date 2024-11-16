@@ -16,35 +16,50 @@ Es imporpotantísimo tener un conocimiento básico de la consola de comandos. Si
 
 ## Creamos un nuevo proyecto.
 
-En la consola de comandos, verifica que estás ubicada/o en la carpeta donde deseas crear el proyecto, recueda que como requisito adicional debes tener instalado node o bun que son compiladores de javascript. Luego ejecuta el siguiente comando:
+En la consola de comandos, verifica que estás ubicada/o en la carpeta donde deseas crear el proyecto. Vamos a ello y ejecutamos el siguiente comando:
 
 ```bash
-# create a new project in the current directory
-npx sv create
+# creamos y proyecto nuevo llamado svelte-auth
+# si usas npm `npx sv create svelte-auth`
+# si usas npm `npx sv create svelte-auth`
+bunx sv create svelte-auth
+```
+![Crear proyecto](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731789646/Captura_desde_2024-11-16_15-40-20_jhnb3v.png)
 
-# create a new project in my-app
-npx sv create my-app
+## Estructura del proyecto
+Un proyecto típico de SvelteKit se ve así:
+
+```markdown
+svelte-auth/
+├ src/
+│ ├ lib/
+│ │ ├ server/
+│ │ │ └ [archivos usados estrictamente del lado del serviodor]
+│ │ └ [otros archivos que se comparten entre cliente y servidor]
+│ ├ routes/
+│ │ └ [aquí van tus rutas de tu proyecto]
+│ ├ app.html
+│ ├ error.html
+│ ├ hooks.server.ts
+├ static/
+│ └ [recursos estáticos como imágenes, fuentes, etc.]
+├ package.json
+├ svelte.config.js
+├ tsconfig.json
+└ vite.config.js
 ```
 
-## Developing
+También encontrarás archivos comunes como .gitignore y .npmrc (y .prettierrc y eslint.config.js y así sucesivamente, si elige esas opciones al ejecutar buns sv create svelte_auth).
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Archivos del proyecto
 
-```bash
-npm run dev
+El directorio `src` contiene lo esencial de tu proyecto. Todo excepto src/routes y src/app.html es opcional.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+  * lib contiene el código de tu biblioteca (utilidades y componentes), que se pueden importar a través del alias `$lib`
+    * server contiene el código de tus bibliotecas solo para el lado del servidor. Se pueden importar utilizando el alias `$lib/server`. SvelteKit te impedirá importarlos en código del lado del cliente.
+  * routes contiene tus rutas. Cada archivo +page.svelte en este directorio se convierte en una ruta en tu aplicación. . También puede colocar otros componentes que solo se usan dentro de una sola ruta aquí.
+  * app.html es la plantilla base de tu aplicación. Puede contener un encabezado, un pie de página y cualquier otra cosa que desee que aparezca en todas las páginas de su aplicación.
+  * error.htmles la página que se representa cuando todo lo demás falla. Puede contener los siguientes marcadores de posición:
+    * %sveltekit.status%— el estado HTTP
+    * %sveltekit.error.message%— el mensaje de error
+  * hooks.server.ts contiene los midlewares del lado del servidor que se ejecutan antes de cada solicitud. Se puede usar esto para autenticar al usuario, cargar datos de la base de datos, etc.
