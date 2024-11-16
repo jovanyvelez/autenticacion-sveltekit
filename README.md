@@ -12,7 +12,7 @@ Si no los tienes instalados, puedes buscar en Google como hacerlo. Para este pro
 Es imporpotantísimo tener un conocimiento básico de la consola de comandos. Si no sabes como abrir la consola de comandos en tu sistema operativo y en general de su uso, puedes buscar en Google como hacerlo, ten en cuenta que en windows existen varias consolas `cmd` o `PowerShell`. Está última comparte comandos comunes con la consola `bash` de linux. Te dejo algunos enlaces para que mires este importante tema:
 
 - [`Básico de cómo usar la consola de Windows`](https://www.youtube.com/watch?v=W6434nulBu8)
-- [`Comandos de PowerShell y consola de Linux que debes conocer`](https://www.dreamhost.com/blog/es/comandos-linux-que-debes-conocer/){:width="100px" height="100px"}
+- [`Comandos de PowerShell y consola de Linux que debes conocer`](https://www.dreamhost.com/blog/es/comandos-linux-que-debes-conocer/)
 
 ## Creamos un nuevo proyecto.
 
@@ -24,7 +24,11 @@ En la consola de comandos, verifica que estás ubicada/o en la carpeta donde des
 # si usas npm `npx sv create svelte-auth`
 bunx sv create svelte-auth
 ```
+
+Ejecutado este comando se nos pedirá la plantilla que queremos usar y seleccionaremos SvelteKit minimal.
 ![Crear proyecto](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731789646/Captura_desde_2024-11-16_15-40-20_jhnb3v.png)
+
+
 
 ## Estructura del proyecto
 Un proyecto típico de SvelteKit se ve así:
