@@ -1,6 +1,13 @@
-# sv
+# Proyecto Para Autenticiación de Usuarios usando Svelte y SvelteKit
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+# Que necesitamos?
+
+Lo primero será tener un conocimiento básico de la consola de comandos. Si no sabes como abrir la consola de comandos en tu sistema operativo, puedes buscar en Google como hacerlo. Te dejo algunos enlaces para que mires este importante tema:
+
+- [`Básico de cómo usar la consola de Windows`](https://www.youtube.com/watch?v=W6434nulBu8)
+- [`Abrir la consola de comandos en Linux`](https://www.redeszone.net/tutoriales/sistemas-operativos/como-abrir-consola-comandos-linux/)
+- [`Abrir la consola de comandos en Windows`](https://www.profesionalreview.com/2019/01/06/como-abrir-la-consola-de-comandos-en-windows-10/)
+
 
 ## Creating a project
 
