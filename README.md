@@ -43,11 +43,16 @@ Las librerías Prettier y ESLint son herramientas populares en el desarrollo de 
 
   * >**ESLint**: Es una herramienta de análisis estático de código que identifica patrones problemáticos en el código JavaScript/TypeScript. ESLint ayuda a encontrar y arreglar errores, aplicar convenciones de estilo y mejorar la calidad del código.
 
-  ![librerias a seleccionar](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731791315/Captura_desde_2024-11-16_16-08-18_gty9zm.png)
-
 Ambas herramientas se pueden usar juntas para asegurar que el código sea limpio, consistente y libre de errores comunes.
 
+  ![librerias a seleccionar](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731791315/Captura_desde_2024-11-16_16-08-18_gty9zm.png)
 
+
+Finalmente seleccionamos el administrador de paquetes con el cual deseamos instalar las dependencias del proyecto y elegimos bun.
+
+![Fin](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731792506/Captura_desde_2024-11-16_16-27-48_wspgbg.png)
+
+Hemos creado nuestro proyecto
 
 ## Estructura del proyecto
 Un proyecto típico de SvelteKit se ve así:
