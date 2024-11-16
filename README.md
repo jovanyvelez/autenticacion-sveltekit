@@ -2,6 +2,12 @@
 
 # Que necesitamos?
 
+Tener instalados en tu equipo los siguientes programas:
+    -- git.
+    -- uno del los siguientes compiladores de javascript: npm, pnpm o bun.
+
+Si no los tienes instalados, puedes buscar en Google como hacerlo. Para este proyecto usaremos bun, pero puedes el de tu preferencia.
+
 Lo primero será tener un conocimiento básico de la consola de comandos. Si no sabes como abrir la consola de comandos en tu sistema operativo, puedes buscar en Google como hacerlo, ten en cuenta que en windows existen varias consolas `cmd` o `PowerShell`. Está última comparte comandos comunes con la consola `bash` de linux. Te dejo algunos enlaces para que mires este importante tema:
 
 - [`Básico de cómo usar la consola de Windows`](https://www.youtube.com/watch?v=W6434nulBu8)
@@ -9,7 +15,7 @@ Lo primero será tener un conocimiento básico de la consola de comandos. Si no 
 
 ## Creamos un nuevo proyecto.
 
-If you're seeing this, you've probably already done this step. Congrats!
+En la consola de comandos, verifica que estás ubicada/o en la carpeta donde deseas crear el proyecto, recueda que como requisito adicional debes tener instalado node o bun que son compiladores de javascript. Luego ejecuta el siguiente comando:
 
 ```bash
 # create a new project in the current directory
