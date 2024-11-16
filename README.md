@@ -25,8 +25,27 @@ En la consola de comandos, verifica que estás ubicada/o en la carpeta donde des
 bunx sv create svelte-auth
 ```
 
-Ejecutado este comando se nos pedirá la plantilla que queremos usar y seleccionaremos SvelteKit minimal.
 ![Crear proyecto](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731789646/Captura_desde_2024-11-16_15-40-20_jhnb3v.png)
+
+**Ejecutado este comando se nos pedirá la plantilla que queremos usar y seleccionaremos SvelteKit minimal y continuamo presionando la tecla enter.**
+
+![Seleccionar plantilla](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731790097/Captura_desde_2024-11-16_15-47-32_tcdyv7.png)
+
+**Se nos pide si queremos usar Typescript o Javascript y seleccionamos Typescript y continuamos con enter**
+
+![Lenguaje a usar](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731790747/Captura_desde_2024-11-16_15-58-50_nzjfrz.png)
+
+**Luego seleccionamos prettier con la barra espaciadora y nos deplazamos con la tecla de flecha abajo de nuestro teclado hasta llegar a eslint, la cual vamos a seleccionar también con la barra espacidadora, luego presionamos enter para continuar**
+
+Las librerías Prettier y ESLint son herramientas populares en el desarrollo de software, especialmente en el ecosistema de JavaScript y TypeScript.
+
+  * >**Prettier**: Es un formateador de código que asegura que todo el código en un proyecto siga un estilo consistente. Prettier analiza el código y lo reescribe con un formato consistente, eliminando la necesidad de debates sobre el estilo de código en los equipos de desarrollo.
+
+  * >**ESLint**: Es una herramienta de análisis estático de código que identifica patrones problemáticos en el código JavaScript/TypeScript. ESLint ayuda a encontrar y arreglar errores, aplicar convenciones de estilo y mejorar la calidad del código.
+
+  ![librerias a seleccionar](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731791315/Captura_desde_2024-11-16_16-08-18_gty9zm.png)
+
+Ambas herramientas se pueden usar juntas para asegurar que el código sea limpio, consistente y libre de errores comunes.
 
 
 
