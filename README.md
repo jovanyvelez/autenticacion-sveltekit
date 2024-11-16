@@ -2,14 +2,12 @@
 
 # Que necesitamos?
 
-Lo primero será tener un conocimiento básico de la consola de comandos. Si no sabes como abrir la consola de comandos en tu sistema operativo, puedes buscar en Google como hacerlo. Te dejo algunos enlaces para que mires este importante tema:
+Lo primero será tener un conocimiento básico de la consola de comandos. Si no sabes como abrir la consola de comandos en tu sistema operativo, puedes buscar en Google como hacerlo, ten en cuenta que en windows existen varias consolas `cmd` o `PowerShell`. Está última comparte comandos comunes con la consola `bash` de linux. Te dejo algunos enlaces para que mires este importante tema:
 
 - [`Básico de cómo usar la consola de Windows`](https://www.youtube.com/watch?v=W6434nulBu8)
-- [`Abrir la consola de comandos en Linux`](https://www.redeszone.net/tutoriales/sistemas-operativos/como-abrir-consola-comandos-linux/)
-- [`Abrir la consola de comandos en Windows`](https://www.profesionalreview.com/2019/01/06/como-abrir-la-consola-de-comandos-en-windows-10/)
+- [`Comandos de PowerShell y consola de Linux que debes conocer`](https://www.dreamhost.com/blog/es/comandos-linux-que-debes-conocer/)
 
-
-## Creating a project
+## Creamos un nuevo proyecto.
 
 If you're seeing this, you've probably already done this step. Congrats!
 
