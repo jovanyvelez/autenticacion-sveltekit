@@ -1,17 +1,16 @@
-import { DATABASE_URL, DATABASE_AUTH_TOKEN } from '$env/static/private';
 
+import 'dotenv/config';
 
 import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
 
 
-if (!DATABASE_URL) throw new Error('Problemas en el archivo de conexión a la base de datos lib/server/db/index.ts, primer if');
-
-
+if (!process.env.DATABASE_URL) throw new Error('Archivo drizzle.con.ts: No se ha definido la variable de entorno DATABASE_URL');
+if (!process.env.DATABASE_AUTH_TOKEN) throw new Error('Archivo drizzle.config.ts: No se ha definido la variable de entorno DATABASE_AUTH_TOKEN');
 
 const client = createClient({ 
-    url: DATABASE_URL, 
-    authToken: DATABASE_AUTH_TOKEN
+    url: process.env.DATABASE_URL, 
+    authToken: process.env.DATABASE_AUTH_TOKEN
   });
   
   export const db = drizzle({ client, casing: 'snake_case' });
