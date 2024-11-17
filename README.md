@@ -342,6 +342,16 @@ Y este es el código que contendrá:
 ```
 Recordemos que un archivo +page.server.ts puede exportar acciones, las cuales permiten recibir información para su debida gestion desde un formulario que use un método **post**.
 
+ ```markdown
+├ 📂 src
+│  └ 📂 routes
+│   ├ 📂 login
+│   │  ├ 📜 +page.svelte
+│   │  └ 📜 +page.server.ts (-aqui-)
+│   └ 📜 +page.svelte
+└ …
+```
+
 Por lo anterior en la etiqueta form estamos declarando los siguientes atributos
 
 ```
@@ -459,3 +469,125 @@ Puedes consultar información sobre bcrypt aquí:
   - [bcrypt](https://www.npmjs.com/package/bcrypt)
   - [Este tutorial en español](https://www.youtube.com/shorts/Z5l5LeYmxnw)
   - [También en este otro](https://www.youtube.com/watch?v=SMS_BN9IyO0)
+
+
+# Parte 4
+
+De forma similar a la anterior creamos una ruta para que el usuario pueda generar una contraseña, cuando se ingresa al sistema por primera vez.
+
+ ```markdown
+├ 📂 src
+│  └ 📂 routes
+│  │ ├ 📂 login
+│  │ │  ├ 📜 +page.svelte
+│  │ │  └ 📜 +page.server.ts
+│  │ └ 📂 registro             │---------> Nueva Carpeta
+│  │     ├ 📜 +page.svelte     │---------> Nuevo Archivo
+│  │     └ 📜 +page.server.ts  │---------> Nuevo Archivo
+│  └ 📜 +page.svelte
+└ …
+```
+
+`+page.svelte`
+
+```html
+
+<script lang="ts">
+	let { form } = $props();
+</script>
+
+<div class="grid">
+	<form action="?/register" method="post">
+		<h1>Registro</h1>
+
+		<div>
+			<label for="email">Escribe tu email</label>
+			<input id="email" name="email" type="email" required />
+		</div>
+
+		<div>
+			<label for="password">Escribe tu Password</label>
+			<input id="password" name="password" type="password" required />
+		</div>
+
+		<div>
+			<label for="password1">Confirma Password</label>
+			<input id="password1" name="password1" type="password" required />
+		</div>
+
+		{#if form?.user}
+			<p class="error">{form.user}</p>
+		{/if}
+
+		{#if form?.mensaje}
+		    <p class="error">{form.mensaje}</p>
+        {/if}
+
+		<button type="submit">Registrarse</button>
+	</form>
+</div>
+```
+
+...Y luego el archivo:
+
+`+page.server.ts`
+
+```TypeScript
+import { credentials } from '$lib/types/appTypes';
+
+import { fail, redirect } from '@sveltejs/kit';
+import bcrypt from 'bcrypt';
+
+import { db } from '$lib/server/db/index';
+import { users } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
+
+
+
+export const actions = {
+
+    register: async ({ request, cookies }) => {
+
+        // Parseamos los datos del formulario
+        const data = Object.fromEntries(await request.formData())
+
+        // Validamos los datos del formulario usando credentials
+        const validate = credentials.safeParse(data);
+
+        //Si los datos no son válidos, retornamos un error
+        if (!validate.success) {
+            return fail(400, { mensaje: validate.error.errors[0].message });
+        }
+
+        //Validamos que las contraseñas coincidan
+        if (String(data.password) !== String(data.password1)) return fail(400, { mensaje: 'Las contraseñas no coinciden' })
+
+        //Buscamos el usuario en la base de datos
+        const user = await db.select().from(users).where(eq(users.email, String(data.email)))
+
+        //Validamos que no haya más de un usuario con el mismo correo
+        if (user.length !== 1) return fail(400, { user: "Upss, tuvimos problemas:Intenta de nuevo" })
+
+        //Generamos un token de autenticación
+        const authenticatedUser = crypto.randomUUID();
+
+        // Guardamos la cookie de sesión
+        cookies.set('session', authenticatedUser, {
+            // enviara la cookie en cada request
+            path: '/',
+            // vencimiento en 30 días
+            maxAge: 60 * 60 * 24 * 30
+        });
+
+        //Actualizamos el usuario en la base de datos
+        await db.update(users).set({
+            passwordHash: await bcrypt.hash(String(data.password), 10),
+            authToken: authenticatedUser,
+        }).where(eq(users.email, String(data.email)))
+
+        // Redirigimos al usuario a la página principal
+        redirect(303, '/')
+    }
+}
+
+```
