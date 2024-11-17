@@ -1,6 +1,6 @@
 # Proyecto Para Autenticiación de Usuarios usando Svelte y SvelteKit
 
-# --Primera 1--
+# Parte1
 
 ## Que necesitamos?
 
@@ -165,10 +165,10 @@ Para ello vamos a crear un archivo .env en la raíz del proyecto con los paráme
 DATABASE_URL="Aqui escribes el url que te dá turso para la base de datos"
 DATABASE_TOKEN="Aqui escribes el token que te dá turso para la base de datos"
 ```
-Creado el archivo anterior, vamos a instalar las dependencias necesarias para que drizzle pueda conectarse a la base de datos, también vamos crear bcript para encriptar los password de usuario mas adelante. Para eso ejecutamos los siguientes comandos en nuestra terminal:
+Creado el archivo anterior, vamos a instalar las dependencias necesarias para que drizzle pueda conectarse a la base de datos, también vamos crear bcript para encriptar los password de usuario y dotenv para las variables de entorno de nuestro proyecto mas adelante. Para eso ejecutamos los siguientes comandos en nuestra terminal:
 
 ```bash
-bun add drizzle-orm @libsql/client bcrypt
+bun add drizzle-orm @libsql/client bcrypt dotenv
 bun add -D drizzle-kit @types/bcript
 ```
 ![instalar paquetes](https://res.cloudinary.com/ddytbuwpm/image/upload/v1731801425/Captura_desde_2024-11-16_18-56-49_ezs2af.png)
@@ -186,17 +186,22 @@ Este archivo lo debemos crear en la raíz del proyecto y es el encargado de conf
 Creemos entonces un archivo llamado drizzle.config.ts en la raíz del proyecto con el siguiente contenido.
 
 ```typescript
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
+
+if (!process.env.DATABASE_URL) throw new Error('Archivo drizzle.config.ts: No se ha definido la variable de entorno DATABASE_URL');
+
+
 export default defineConfig({
-  out: './drizzle',
-  schema: './src/server/lib/db/schema.ts',
-  dialect: 'turso',
-  casing: 'snake_case'
-  dbCredentials: {
-    url: process.env.DATABASE_URL,
-    authToken: process.DATABASE_TOKEN,
-  },
+	out: './drizzle',
+	schema: './src/lib/server/db/schema.ts',
+	dialect: 'turso',
+	dbCredentials: {
+		url: process.env.DATABASE_URL,
+		authToken: process.env.DATABASE_AUTH_TOKEN
+	},
+  casing: 'snake_case',
+	verbose: true,
+	strict: true,
 });
 ```
 
@@ -244,3 +249,41 @@ Se recomienda copiar los archivos drizzle/schema.ts y drizzle/relations.ts a la 
     │       └ 📜 schema.ts <─────┘
     └ …
  ```
+## Conectemos drizzle a nuestra base de datos.
+
+Para ello vamos a crear un archivo nuevo en la carpeta `src/lib/server/db/` cuyo nombre será `index.ts`
+ ```markdown
+├ 📂 src                     
+│  └ 📂 lib                      
+│   └ 📂 server              
+│     └ 📂 db                
+│       ├ 📜 relations.ts 
+│       ├ 📜 schema.ts
+│       └ 📜 index.ts
+└ …
+```
+El archivo tendrá el siguiente contenido:
+
+`index.ts`
+```typescript
+import 'dotenv/config';
+
+import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client';
+
+
+if (!process.env.DATABASE_URL) 
+  throw new Error('Archivo index.ts: No se ha definido la variable de entorno DATABASE_URL');
+
+if (!process.env.DATABASE_AUTH_TOKEN) 
+  throw new Error('Archivo index.ts: No se ha definido la variable de entorno DATABASE_AUTH_TOKEN');
+
+const client = createClient({
+  url: process.env.DATABASE_URL,
+  authToken: process.env.DATABASE_AUTH_TOKEN
+});
+
+export const db = drizzle({ client, casing: 'snake_case' });
+```
+
+# Parte 3
