@@ -1,4 +1,8 @@
-# Proyecto Para Autenticiación de Usuarios usando Svelte y SvelteKit
+# Título del Proyecto: "Sistema de Autenticación de Usuarios con SvelteKit"
+
+Descripción General:
+Es un proyecto de autenticación de usuarios desarrollado con Svelte y SvelteKit, que implementa un sistema seguro de inicio de sesión utilizando hooks, cookies y tokens de autenticación. El sistema verifica la autenticación del usuario en cada petición mediante cookies, y gestiona el primer acceso de usuarios pre-registrados que deben establecer su contraseña inicial.
+
 
 # Parte1
 
@@ -61,18 +65,18 @@ Hemos creado nuestra estructura inicial del proyecto
 Un proyecto típico de SvelteKit se ve así:
 
 ```markdown
-svelte-auth/
-├ src/
-│ ├ lib/
-│ │ ├ server/
+📂 svelte-auth
+├ 📂src
+│ ├ 📂lib
+│ │ ├ 📂server
 │ │ │ └ [archivos usados estrictamente del lado del serviodor]
 │ │ └ [otros archivos que se comparten entre cliente y servidor]
-│ ├ routes/
+│ ├ 📂routes
 │ │ └ [aquí van tus rutas de tu proyecto]
 │ ├ app.html
 │ ├ error.html
-│ ├ hooks.server.ts
-├ static/
+│ └ hooks.server.ts
+├ 📂static
 │ └ [recursos estáticos como imágenes, fuentes, etc.]
 ├ package.json
 ├ svelte.config.js
@@ -234,13 +238,13 @@ export const users = sqliteTable("users", {
 ```
 
 ## Copiar el código de la carpeta drizzle a su destino final
-Se recomienda copiar los archivos drizzle/schema.ts y drizzle/relations.ts a la carpeta donde se almacenarán definitivamente en el proyecto. En este caso los vamos a dejar en src/server/db/. 
+Se recomienda copiar los archivos drizzle/schema.ts y drizzle/relations.ts a la carpeta donde se almacenarán definitivamente en el proyecto. En este caso los vamos a dejar en src/server/db/.
  ```markdown
     ├ 📂 drizzle
     │ ├ 📂 meta
     │ ├ 📜 migration.sql
     │ ├ 📜 relations.ts ─────────┐
-    │ └ 📜 schema.ts ────────────┤ 
+    │ └ 📜 schema.ts ────────────┤
     ├ 📂 src                     │
     │  └ 📂 db                   │
     │   └ 📂 server              │
@@ -253,11 +257,11 @@ Se recomienda copiar los archivos drizzle/schema.ts y drizzle/relations.ts a la 
 
 Para ello vamos a crear un archivo nuevo en la carpeta `src/lib/server/db/` cuyo nombre será `index.ts`
  ```markdown
-├ 📂 src                     
-│  └ 📂 lib                      
-│   └ 📂 server              
-│     └ 📂 db                
-│       ├ 📜 relations.ts 
+├ 📂 src
+│  └ 📂 lib
+│   └ 📂 server
+│     └ 📂 db
+│       ├ 📜 relations.ts
 │       ├ 📜 schema.ts
 │       └ 📜 index.ts
 └ …
@@ -272,10 +276,10 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
 
 
-if (!process.env.DATABASE_URL) 
+if (!process.env.DATABASE_URL)
   throw new Error('Archivo index.ts: No se ha definido la variable de entorno DATABASE_URL');
 
-if (!process.env.DATABASE_AUTH_TOKEN) 
+if (!process.env.DATABASE_AUTH_TOKEN)
   throw new Error('Archivo index.ts: No se ha definido la variable de entorno DATABASE_AUTH_TOKEN');
 
 const client = createClient({
@@ -287,3 +291,65 @@ export const db = drizzle({ client, casing: 'snake_case' });
 ```
 
 # Parte 3
+
+La teoría de esta parte la pueden encontrar en la [documentación de svelte](https://svelte.dev/docs/kit/form-actions)
+
+Para que un usuario pueda ingresar a nuestra aplicación, deberemos gestionar este ingreso através de un formulario de login. Para ello vamos a crear un formulario de login en una ruta que recibirá el nombre de `login` y el formulario lo escribiremos en su respectivo archivo `+page.svelte`:
+
+ ```markdown
+├ 📂 src
+│  └ 📂 routes
+│   ├ 📂 login
+│   │  └ 📜 +page.svelte (-aqui-)
+│   └ 📜 +page.svelte     
+└ …
+```
+Y este es el código que contendrá:
+
+```TypeScript
+<script lang="ts">
+
+	let { form } = $props();
+
+</script>
+
+<div class="grid mx-3">
+	<form action="?/login" method="POST">
+		<h1>Ingreso</h1>
+
+		<div>
+			<label for="email">Escribe tu email</label>
+			<input id="email" name="email" type="text"  required />
+		</div>
+
+		<div>
+			<label for="password">Escribe tu Password</label>
+			<input id="password" name="password" type="password" required />
+		</div>
+
+		{#if form?.mensaje }
+			<p class="error">{form.mensaje}</p>
+		{/if}
+
+		{#if form?.credentials}
+			<p class="error">Usuario o contraseña invalido</p>
+		{/if}
+
+		<button type="submit">Register</button>
+
+	</form>
+</div>
+```
+Recordemos que un archivo +page.server.ts puede exportar acciones, las cuales permiten recibir información para su debida gestion desde un formulario <form> que use un método **post**.
+
+Por lo anterior en la etiqueta form estamos declarando la etiqueta form con los siguientes atributos  
+
+```
+<form action="?/login" method="POST">
+```
+
+  * **action="?/login"**: Quiere decir que los datos que se envíen desde el formulario serán recibidos por ***la acción llamada login***, la cual estará en la misma ruta `login` que acabamos de crear, en su correspondiente archivo +page.server.ts.
+
+  * **method="post**: El atributo method en una etiqueta <form> de HTML especifica el método HTTP que se utilizará para enviar los datos del formulario al servidor, en este caso estamos usando "post"
+
+    **Recuerda que:** Un método HTTP (o verbo HTTP) es un tipo de petición que un cliente (como un navegador web) puede hacer a un servidor. Es una parte fundamental del protocolo HTTP (Hypertext Transfer Protocol) que define la acción que se desea realizar sobre un recurso específico.
